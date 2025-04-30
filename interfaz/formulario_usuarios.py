@@ -24,6 +24,7 @@ class FormularioUsuarios(tk.Frame):
         self.usuario_seleccionado_text = tk.Label(self, text="", width=50)
         self.usuario_seleccionado_text.pack()
 
+        # Vincular el evento de selección
         self.usuario_listbox.bind("<<ListboxSelect>>", self.actualizar_usuario)
 
     def actualizar_usuario(self, event):
@@ -31,6 +32,4 @@ class FormularioUsuarios(tk.Frame):
         if selected_usuario_index:
             usuario_seleccionado = self.usuarios[selected_usuario_index[0]]
             self.usuario_seleccionado_text.config(text=f"{usuario_seleccionado.nombre}")
-            self.callback(usuario_seleccionado)
-        else:
-            self.usuario_seleccionado_text.config(text="")
+            self.callback(usuario_seleccionado)  # Actualiza el usuario seleccionado en la ventana principal

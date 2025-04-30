@@ -25,6 +25,7 @@ class FormularioLibros(tk.Frame):
         self.libro_seleccionado_text = tk.Label(self, text="", width=50)
         self.libro_seleccionado_text.pack()
 
+        # Vincular el evento de selección
         self.libro_listbox.bind("<<ListboxSelect>>", self.actualizar_libro)
 
     def actualizar_libro(self, event):
@@ -33,8 +34,4 @@ class FormularioLibros(tk.Frame):
             libro_seleccionado = self.libros[selected_libro_index[0]]
             if libro_seleccionado.estado == "disponible":
                 self.libro_seleccionado_text.config(text=f"{libro_seleccionado.titulo} de {libro_seleccionado.autor}")
-                self.callback(libro_seleccionado)
-            else:
-                self.libro_seleccionado_text.config(text="Este libro no está disponible.")
-        else:
-            self.libro_seleccionado_text.config(text="")
+                self.callback(libro_seleccionado)  # Actualiza el libro seleccionado en la ventana principal
