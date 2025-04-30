@@ -1,10 +1,10 @@
 from datetime import datetime, timedelta
 
-class User:
-    def __init__(self, nombre, tipo):
+class Usuario:
+    def __init__(self, nombre, id_usuario):
         self.nombre = nombre
-        self.tipo = tipo
-        self.historial_prestamos = []
+        self.id_usuario = id_usuario
+        self.historial_prestamos = []  # Lista para registrar los préstamos del usuario
 
     def tomar_prestado(self, libro, csv_manager):
         if libro.is_available():

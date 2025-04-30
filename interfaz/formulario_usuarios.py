@@ -1,6 +1,8 @@
 # interfaz/formulario_usuarios.py
 import tkinter as tk
-from usuarios.usuario import User
+from usuarios.usuario import Usuario
+
+usuario = Usuario("Juan Perez", 1)
 
 class FormularioUsuarios(tk.Frame):
     def __init__(self, parent, usuarios, callback):

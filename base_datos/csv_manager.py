@@ -2,7 +2,7 @@ import csv
 from catalogo.book import Book
 from datetime import datetime
 from catalogo.book import Book  # Importar la clase Book
-from usuarios.usuario import User  # Importar la clase User
+from usuarios.usuario import Usuario  # Importar la clase User
 
 class CSVManager:
     def __init__(self, libros_file, usuarios_file, prestamos_file):
@@ -29,9 +29,8 @@ class CSVManager:
         with open(self.usuarios_file, mode='r') as file:
             reader = csv.reader(file)
             for row in reader:
-                if row:
-                    # Crear usuario con la información cargada del CSV
-                    usuario = User(row[0], row[1])  # Asegúrate de que esto coincide con los atributos
+                if row:  # Verifica que la fila no esté vacía
+                    usuario = Usuario(row[0], row[1])  # Crear usuario con nombre e ID
                     usuarios.append(usuario)
         return usuarios
 
