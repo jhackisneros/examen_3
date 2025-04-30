@@ -4,6 +4,7 @@ from tkinter import messagebox
 from base_datos.csv_manager import CSVManager
 from .formulario_libros import FormularioLibros
 from .formulario_usuarios import FormularioUsuarios
+from prestamos.gestor_prestamos import Prestamo
 from datetime import datetime
 
 class VentanaPrincipal(tk.Tk):
@@ -67,9 +68,13 @@ class VentanaPrincipal(tk.Tk):
             return
 
         respuesta = messagebox.askyesno("Confirmar préstamo", f"¿Deseas prestar '{self.libro_seleccionado.titulo}' a {self.usuario_seleccionado.nombre}?")
-        
+
         if respuesta:
-            self.usuario_seleccionado.tomar_prestado(self.libro_seleccionado, self.csv_manager)
+            prestamo = Prestamo(self.libro_seleccionado)
+            self.libro_seleccionado.prestar(prestamo.fecha_prestamo, prestamo.fecha_devolucion)
+            self.usuario_seleccionado.historial_prestamos.append(prestamo)
+            self.csv_manager.guardar_prestamo(self.usuario_seleccionado, self.libro_seleccionado)
+
             messagebox.showinfo("Préstamo realizado", f"{self.usuario_seleccionado.nombre} ha tomado prestado '{self.libro_seleccionado.titulo}'.")
 
             # Actualizar libros no disponibles
@@ -81,15 +86,13 @@ class VentanaPrincipal(tk.Tk):
             self.prestamo_button.config(state=tk.DISABLED)
 
     def actualizar_libros_no_disponibles(self):
-        # Limpiar la lista
         self.libros_no_disponibles_listbox.delete(0, tk.END)
         for libro in self.csv_manager.libros:
-            if libro.estado == "prestado":
+            if libro.estado == "prestado" and hasattr(libro, "fecha_devolucion"):
                 self.libros_no_disponibles_listbox.insert(tk.END, f"{libro.titulo} (Dev. {libro.fecha_devolucion.strftime('%Y-%m-%d')})")
 
     def actualizar_historial(self):
-        # Limpiar la lista
         self.historial_listbox.delete(0, tk.END)
         for usuario in self.csv_manager.usuarios:
             for prestamo in usuario.historial_prestamos:
-                self.historial_listbox.insert(tk.END, f"{prestamo['libro']} - {prestamo['fecha_prestamo'].strftime('%Y-%m-%d %H:%M:%S')} - Entrega: {prestamo['fecha_devolucion'].strftime('%Y-%m-%d')}")
+                self.historial_listbox.insert(tk.END, str(prestamo))
