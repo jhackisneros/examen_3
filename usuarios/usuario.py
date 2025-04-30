@@ -13,7 +13,7 @@ class Prestamo:
             f"Dev: {self.fecha_devolucion.strftime('%Y-%m-%d')})"
         )
 
-class Usuario:
+class User:
     def __init__(self, nombre):
         self.nombre = nombre
         self.historial_prestamos = []
