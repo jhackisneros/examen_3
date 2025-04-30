@@ -2,8 +2,8 @@
 import tkinter as tk
 from tkinter import messagebox
 from base_datos.csv_manager import CSVManager
-from formulario_libros import FormularioLibros
-from formulario_usuarios import FormularioUsuarios
+from .formulario_libros import FormularioLibros  # Cambié la importación
+from .formulario_usuarios import FormularioUsuarios  # Cambié la importación
 
 class VentanaPrincipal(tk.Tk):
     def __init__(self, libros, usuarios):
@@ -49,3 +49,11 @@ class VentanaPrincipal(tk.Tk):
             self.usuario_seleccionado.tomar_prestado(self.libro_seleccionado, self.csv_manager)
             messagebox.showinfo("Préstamo realizado", f"{self.usuario_seleccionado.nombre} ha tomado prestado '{self.libro_seleccionado.titulo}'.")
             self.prestamo_button.config(state=tk.DISABLED)
+#
+
+
+
+
+
+
+
