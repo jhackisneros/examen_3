@@ -83,15 +83,15 @@ class VentanaPrincipal(tk.Tk):
             messagebox.showerror("Error", str(e))
 
     def actualizar_libros_no_disponibles(self):
-    # Limpiar la lista
+        # Limpiar la lista
         self.libros_no_disponibles_listbox.delete(0, tk.END)
-        for libro in self.csv_manager.libros:
+        for libro in self.libros:  # Usar la lista de libros actualizada
             if libro.estado == "prestado":
                 self.libros_no_disponibles_listbox.insert(tk.END, f"{libro.titulo} (Dev. {libro.fecha_devolucion.strftime('%Y-%m-%d')})")
 
     def actualizar_historial(self):
-    # Limpiar la lista
+        # Limpiar la lista
         self.historial_listbox.delete(0, tk.END)
-        for usuario in self.csv_manager.usuarios:
+        for usuario in self.usuarios:
             for prestamo in usuario.historial_prestamos:
-                self.historial_listbox.insert(tk.END, f"{prestamo.libro} - {prestamo.fecha_prestamo.strftime('%Y-%m-%d %H:%M:%S')} - Entrega: {prestamo.fecha_devolucion.strftime('%Y-%m-%d')}")
+                self.historial_listbox.insert(tk.END, f"{prestamo['usuario']} - {prestamo['fecha_prestamo'].strftime('%Y-%m-%d')} - {prestamo['fecha_devolucion'].strftime('%Y-%m-%d')}")

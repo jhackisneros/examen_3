@@ -19,9 +19,8 @@ class CSVManager:
         with open(self.libros_file, mode='r') as file:
             reader = csv.reader(file)
             for row in reader:
-                if row:
-                # Crear libro con la información cargada del CSV
-                    libro = Book(row[0], row[1], row[2])
+                if row:  # Verifica que la fila no esté vacía
+                    libro = Book(row[0], row[1], row[2])  # Crear libro con la información cargada del CSV
                     libros.append(libro)
         return libros
 
