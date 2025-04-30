@@ -14,25 +14,19 @@ class Book:
         """Verifica si el libro está disponible para préstamo."""
         return self.estado == "disponible"
 
-    def prestar(self, usuario=None):
-        """Marca el libro como prestado y registra el préstamo."""
-        if self.is_available():
-            self.estado = "prestado"
-            self.fecha_prestamo = datetime.now()
-            self.fecha_devolucion = self.fecha_prestamo + timedelta(days=30)
-            if usuario:
-                # Verifica que el usuario tenga el atributo 'nombre'
-                if hasattr(usuario, 'nombre'):
-                    self.historial_prestamos.append({
-                        'usuario': usuario.nombre,
-                        'fecha_prestamo': self.fecha_prestamo,
-                        'fecha_devolucion': self.fecha_devolucion
-                    })
-                else:
-                    raise AttributeError("El objeto usuario no tiene un atributo 'nombre'.")
-            return True
-        else:
-            raise Exception(f"El libro '{self.titulo}' no está disponible para préstamo.")
+    def realizar_prestamo(self, usuario, libro):
+        if not libro.is_available():
+            raise Exception(f"El libro '{libro.titulo}' no está disponible para préstamo.")
+
+        # Registrar el préstamo
+        libro.prestar(usuario)
+
+        # Crear un objeto Prestamo y agregarlo al historial del usuario
+        prestamo = prestamo(libro)
+        usuario.historial_prestamos.append(prestamo)
+
+        # Guardar el préstamo en el archivo CSV
+        self.csv_manager.guardar_prestamo(usuario, libro)
 
     def devolver(self):
         """Marca el libro como disponible."""
