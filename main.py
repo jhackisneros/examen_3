@@ -1,5 +1,5 @@
 # main.py
-from gestion_datos.csv_manager import CSVManager
+from base_datos.csv_manager import CSVManager
 from catalogo.book import Book
 from catalogo.book_genre import BookGenre
 from usuarios.usuario import User

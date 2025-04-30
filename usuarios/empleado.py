@@ -1,5 +1,5 @@
 # gestion_empleado/employee.py
-from gestion_usuario.user import User
+from usuarios.usuario import User
 from catalogo.book import Book
 from typing import List
 
