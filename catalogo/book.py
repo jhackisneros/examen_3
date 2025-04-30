@@ -22,7 +22,7 @@ class Book:
             self.fecha_devolucion = self.fecha_prestamo + timedelta(days=30)
             if usuario:
                 self.historial_prestamos.append({
-                    'usuario': usuario.nombre,
+                    'usuario': usuario.nombre,  # Se espera que el usuario tenga un atributo 'nombre'
                     'fecha_prestamo': self.fecha_prestamo,
                     'fecha_devolucion': self.fecha_devolucion
                 })
