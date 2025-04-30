@@ -66,29 +66,31 @@ class VentanaPrincipal(tk.Tk):
             return
 
         try:
+            # Realizar el préstamo utilizando el gestor de préstamos
             self.gestor_prestamos.realizar_prestamo(self.usuario_seleccionado, self.libro_seleccionado)
             messagebox.showinfo("Préstamo realizado", f"{self.usuario_seleccionado.nombre} ha tomado prestado '{self.libro_seleccionado.titulo}'.")
 
-            # Actualizar libros no disponibles
+        # Actualizar libros no disponibles
             self.actualizar_libros_no_disponibles()
 
-            # Actualizar historial
+        # Actualizar historial
             self.actualizar_historial()
 
+        # Deshabilitar el botón de préstamo
             self.prestamo_button.config(state=tk.DISABLED)
 
         except Exception as e:
             messagebox.showerror("Error", str(e))
 
     def actualizar_libros_no_disponibles(self):
-        # Limpiar la lista
+    # Limpiar la lista
         self.libros_no_disponibles_listbox.delete(0, tk.END)
         for libro in self.csv_manager.libros:
             if libro.estado == "prestado":
                 self.libros_no_disponibles_listbox.insert(tk.END, f"{libro.titulo} (Dev. {libro.fecha_devolucion.strftime('%Y-%m-%d')})")
 
     def actualizar_historial(self):
-        # Limpiar la lista
+    # Limpiar la lista
         self.historial_listbox.delete(0, tk.END)
         for usuario in self.csv_manager.usuarios:
             for prestamo in usuario.historial_prestamos:

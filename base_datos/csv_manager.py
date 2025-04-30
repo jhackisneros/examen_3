@@ -1,4 +1,5 @@
 import csv
+from catalogo.book import Book
 from datetime import datetime
 from catalogo.book import Book  # Importar la clase Book
 from usuarios.usuario import User  # Importar la clase User
@@ -19,8 +20,8 @@ class CSVManager:
             reader = csv.reader(file)
             for row in reader:
                 if row:
-                    # Crear libro con la información cargada del CSV
-                    libro = Book(row[0], row[1], row[2])  # Asegúrate de que esto coincide con los atributos
+                # Crear libro con la información cargada del CSV
+                    libro = Book(row[0], row[1], row[2])
                     libros.append(libro)
         return libros
 

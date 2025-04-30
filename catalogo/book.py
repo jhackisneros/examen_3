@@ -21,13 +21,18 @@ class Book:
             self.fecha_prestamo = datetime.now()
             self.fecha_devolucion = self.fecha_prestamo + timedelta(days=30)
             if usuario:
-                self.historial_prestamos.append({
-                    'usuario': usuario.nombre,  # Se espera que el usuario tenga un atributo 'nombre'
-                    'fecha_prestamo': self.fecha_prestamo,
-                    'fecha_devolucion': self.fecha_devolucion
-                })
+                # Verifica que el usuario tenga el atributo 'nombre'
+                if hasattr(usuario, 'nombre'):
+                    self.historial_prestamos.append({
+                        'usuario': usuario.nombre,
+                        'fecha_prestamo': self.fecha_prestamo,
+                        'fecha_devolucion': self.fecha_devolucion
+                    })
+                else:
+                    raise AttributeError("El objeto usuario no tiene un atributo 'nombre'.")
             return True
-        return False
+        else:
+            raise Exception(f"El libro '{self.titulo}' no está disponible para préstamo.")
 
     def devolver(self):
         """Marca el libro como disponible."""
@@ -36,7 +41,8 @@ class Book:
             self.fecha_prestamo = None
             self.fecha_devolucion = None
             return True
-        return False
+        else:
+            raise Exception(f"El libro '{self.titulo}' no está prestado actualmente.")
 
     def __str__(self):
         """Devuelve una representación en texto del libro."""
